@@ -6,7 +6,7 @@
 const STORAGE_KEY = 'vcm_afiliados';
 const SESSION_KEY = 'vcm_afiliado_logado';
 
-// URL base do site de vendas (ajuste para o domínio real)
+// URL base do site de vendas (ajuste para o domínio real do vcmarmitas)
 const SITE_VENDAS_URL = 'https://vcmarmitas.com.br';
 
 // ---------- Helpers ----------
@@ -56,6 +56,8 @@ function abrirModalAuth(modo = 'login') {
   const groupNome = document.getElementById('group-nome');
   const groupTel = document.getElementById('group-telefone');
   const groupPix = document.getElementById('group-pix');
+  const toggleText = document.getElementById('toggle-text');
+  const toggleBtn = document.getElementById('toggle-btn');
 
   if (modo === 'cadastro') {
     titulo.textContent = 'Criar Conta de Afiliado';
@@ -63,12 +65,16 @@ function abrirModalAuth(modo = 'login') {
     groupNome.style.display = 'block';
     groupTel.style.display = 'block';
     if (groupPix) groupPix.style.display = 'block';
+    if (toggleText) toggleText.textContent = 'Já tem conta?';
+    if (toggleBtn) toggleBtn.textContent = 'Entrar';
   } else {
     titulo.textContent = 'Entrar na Conta';
     btn.textContent = 'Entrar';
     groupNome.style.display = 'none';
     groupTel.style.display = 'none';
     if (groupPix) groupPix.style.display = 'none';
+    if (toggleText) toggleText.textContent = 'Ainda não tem conta?';
+    if (toggleBtn) toggleBtn.textContent = 'Cadastre-se';
   }
   modal.dataset.modo = modo;
 }
@@ -114,7 +120,7 @@ function processarAuth(e) {
       senha, // demo only — em produção use hash + Supabase Auth
       codigo: generateCode(nome),
       criadoEm: new Date().toISOString(),
-      vendas: [], // mock
+      vendas: [],
       totalComissao: 0,
       totalBonus: 0
     };
@@ -151,7 +157,7 @@ function gerarVendasDemo(codigo) {
   return [
     {
       id: 'v1',
-      cliente: 'Cliente A',
+      cliente: 'Maria Silva',
       pedido: 1,
       valor: 119.9,
       comissaoPct: 8,
@@ -162,7 +168,7 @@ function gerarVendasDemo(codigo) {
     },
     {
       id: 'v2',
-      cliente: 'Cliente A',
+      cliente: 'Maria Silva',
       pedido: 2,
       valor: 229.9,
       comissaoPct: 6,
@@ -173,7 +179,7 @@ function gerarVendasDemo(codigo) {
     },
     {
       id: 'v3',
-      cliente: 'Cliente B',
+      cliente: 'João Santos',
       pedido: 1,
       valor: 378.0,
       comissaoPct: 8,
@@ -184,7 +190,7 @@ function gerarVendasDemo(codigo) {
     },
     {
       id: 'v4',
-      cliente: 'Cliente C',
+      cliente: 'Ana Costa',
       pedido: 1,
       valor: 119.9,
       comissaoPct: 8,
@@ -201,6 +207,12 @@ function recalcularTotais(user) {
   user.totalBonus = user.vendas.reduce((s, v) => s + (v.bonus || 0), 0);
   user.clientesUnicos = [...new Set(user.vendas.map(v => v.cliente))].length;
   user.pedidos = user.vendas.length;
+  user.totalPago = user.vendas
+    .filter(v => v.status === 'pago')
+    .reduce((s, v) => s + (v.comissao || 0) + (v.bonus || 0), 0);
+  user.totalPendente = user.vendas
+    .filter(v => v.status === 'pendente')
+    .reduce((s, v) => s + (v.comissao || 0) + (v.bonus || 0), 0);
 }
 
 // ---------- Dashboard ----------
@@ -219,6 +231,9 @@ function initDashboard() {
     return;
   }
 
+  // Recalcula totais (caso dados antigos)
+  recalcularTotais(user);
+
   // Header
   document.getElementById('nome-usuario').textContent = user.nome.split(' ')[0];
   document.getElementById('avatar-inicial').textContent = user.nome.charAt(0).toUpperCase();
@@ -229,11 +244,35 @@ function initDashboard() {
   document.getElementById('stat-clientes').textContent = user.clientesUnicos || 0;
   document.getElementById('stat-pedidos').textContent = user.pedidos || 0;
 
+  const elPago = document.getElementById('stat-pago');
+  const elPendente = document.getElementById('stat-pendente');
+  if (elPago) elPago.textContent = formatMoney(user.totalPago || 0);
+  if (elPendente) elPendente.textContent = formatMoney(user.totalPendente || 0);
+
   // Link
   const link = `${SITE_VENDAS_URL}/?ref=${user.codigo}`;
   const inputLink = document.getElementById('link-afiliado');
   if (inputLink) inputLink.value = link;
   document.getElementById('codigo-afiliado').textContent = user.codigo;
+
+  // WhatsApp share
+  const btnWa = document.getElementById('btn-whatsapp-share');
+  if (btnWa) {
+    const msg = encodeURIComponent(
+      `Oi! Conheça o Cardápio Fitness Congelado da Vani Aguiar 🥗\nRefeições saudáveis e práticas entregues na sua casa.\nPeça pelo meu link: ${link}`
+    );
+    btnWa.href = `https://wa.me/?text=${msg}`;
+  }
+
+  // Dados do afiliado
+  const elEmail = document.getElementById('info-email');
+  const elTel = document.getElementById('info-tel');
+  const elPix = document.getElementById('info-pix');
+  const elDesde = document.getElementById('info-desde');
+  if (elEmail) elEmail.textContent = user.email;
+  if (elTel) elTel.textContent = user.telefone || '—';
+  if (elPix) elPix.textContent = user.pix || 'Não cadastrada';
+  if (elDesde) elDesde.textContent = formatDate(user.criadoEm);
 
   // Extrato
   const tbody = document.getElementById('extrato-body');
@@ -266,7 +305,70 @@ function copiarLink() {
     const original = btn.innerHTML;
     btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
     setTimeout(() => { btn.innerHTML = original; }, 2000);
+  }).catch(() => {
+    // fallback
+    document.execCommand('copy');
+    alert('Link copiado!');
   });
+}
+
+function compartilharNativo() {
+  const input = document.getElementById('link-afiliado');
+  if (!input || !navigator.share) {
+    copiarLink();
+    return;
+  }
+  navigator.share({
+    title: 'Cardápio Fitness VC Marmitas',
+    text: 'Conheça as marmitas fitness da Vani Aguiar!',
+    url: input.value
+  }).catch(() => {});
+}
+
+function simularNovaVenda() {
+  const session = getSession();
+  if (!session) return;
+  const list = getAffiliates();
+  const idx = list.findIndex(a => a.id === session.id);
+  if (idx === -1) return;
+
+  const user = list[idx];
+  const clientes = ['Pedro Lima', 'Carla Mendes', 'Rafael Souza', 'Juliana Alves', 'Bruno Ferreira'];
+  const valores = [24.9, 119.9, 229.9, 378.0];
+  const valor = valores[Math.floor(Math.random() * valores.length)];
+  const cliente = clientes[Math.floor(Math.random() * clientes.length)];
+
+  // Conta quantos pedidos esse cliente já tem
+  const pedidosCliente = user.vendas.filter(v => v.cliente === cliente).length;
+  const numPedido = pedidosCliente + 1;
+  if (numPedido > 4) {
+    alert('Esse cliente já atingiu o 4º pedido (vínculo encerrado). Tente outro.');
+    return;
+  }
+
+  const pctMap = { 1: 8, 2: 6, 3: 5, 4: 3 };
+  const pct = pctMap[numPedido];
+  const comissao = +(valor * pct / 100).toFixed(2);
+  let bonus = 0;
+  if (numPedido === 3 || numPedido === 4) bonus = 15;
+
+  user.vendas.push({
+    id: 'v' + Date.now(),
+    cliente,
+    pedido: numPedido,
+    valor,
+    comissaoPct: pct,
+    comissao,
+    bonus,
+    status: Math.random() > 0.4 ? 'pago' : 'pendente',
+    data: new Date().toISOString()
+  });
+
+  recalcularTotais(user);
+  list[idx] = user;
+  saveAffiliates(list);
+  initDashboard();
+  alert(`Venda simulada: ${cliente} · ${numPedido}º pedido · ${formatMoney(valor)}`);
 }
 
 // ---------- Init ----------
@@ -274,6 +376,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Se estiver no dashboard
   if (document.body.classList.contains('page-dashboard')) {
     initDashboard();
+  }
+
+  // Abre modal de cadastro se veio dos termos
+  if (sessionStorage.getItem('openAuth') === 'cadastro') {
+    sessionStorage.removeItem('openAuth');
+    setTimeout(() => abrirModalAuth('cadastro'), 300);
   }
 
   // Fecha modal ao clicar fora
