@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programa de Afiliados | Vani Aguiar / VC Marmitas</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- TOP NAV -->
+  <div class="top-nav">
+    <div class="container">
+      <span>Programa de Afiliados VC Marmitas</span>
+      <div>
+        <a href="termos.html">Regras</a>
+        <a href="#" onclick="abrirModalAuth('login'); return false;">Entrar</a>
+        <a href="#" onclick="abrirModalAuth('cadastro'); return false;" style="color: var(--primary-color);">Cadastre-se</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container hero-content">
+      <div class="logo-text">VC <span>Marmitas</span></div>
+      <span class="badge">Ganhe comissão indicando refeições saudáveis</span>
+      <h1>Transforme indicações em renda extra</h1>
+      <p>Indique o Cardápio Fitness Congelado da Vani Aguiar e receba comissões de até 8% + bônus por recorrência. Simples, transparente e 100% online.</p>
+      <div style="display:flex; gap:15px; flex-wrap:wrap; justify-content:center;">
+        <button class="btn btn-primary btn-large" onclick="abrirModalAuth('cadastro')">
+          Quero ser Afiliado <i class="fas fa-rocket"></i>
+        </button>
+        <a href="termos.html" class="btn btn-secondary btn-large">Ver Regras</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- BENEFÍCIOS -->
+  <section class="container">
+    <div class="section-title">
+      <h2>Por que ser afiliado?</h2>
+      <p>Vantagens pensadas para quem quer faturar de verdade</p>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <i class="fas fa-percentage"></i>
+        <h3>Comissão progressiva</h3>
+        <p>8% no 1º pedido, 6% no 2º, 5% no 3º e 3% no 4º. Você ganha enquanto o cliente compra.</p>
+      </div>
+      <div class="benefit-card">
+        <i class="fas fa-gift"></i>
+        <h3>Bônus de recorrência</h3>
+        <p>R$ 15 extras no 3º e no 4º pedido do mesmo cliente. Fidelização paga.</p>
+      </div>
+      <div class="benefit-card">
+        <i class="fas fa-rocket"></i>
+        <h3>Acelerador inicial</h3>
+        <p>Nos primeiros 7 dias, 3 clientes válidos = bônus de R$ 20. Comece ganhando rápido.</p>
+      </div>
+      <div class="benefit-card">
+        <i class="fas fa-link"></i>
+        <h3>Link exclusivo</h3>
+        <p>Gere seu link personalizado e compartilhe no WhatsApp, Instagram ou onde quiser.</p>
+      </div>
+      <div class="benefit-card">
+        <i class="fas fa-chart-line"></i>
+        <h3>Dashboard completo</h3>
+        <p>Acompanhe vendas, comissões e extrato em tempo real na sua área logada.</p>
+      </div>
+      <div class="benefit-card">
+        <i class="fas fa-wallet"></i>
+        <h3>Pagamento via PIX</h3>
+        <p>Comissões liberadas após entrega confirmada. Você cadastra sua chave PIX.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TABELA DE COMISSÕES -->
+  <section style="background: var(--light-bg);">
+    <div class="container">
+      <div class="section-title">
+        <h2>Tabela de Comissionamento</h2>
+        <p>Valores sobre o total pago em produtos (pedido mínimo R$ 45)</p>
+      </div>
+      <div class="comm-table-wrap">
+        <table class="comm-table">
+          <thead>
+            <tr>
+              <th>Pedido do Cliente</th>
+              <th>Comissão</th>
+              <th>Bônus extra</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1º Pedido</strong></td>
+              <td>8%</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>2º Pedido</strong></td>
+              <td>6%</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>3º Pedido</strong></td>
+              <td>5%</td>
+              <td>R$ 15,00</td>
+            </tr>
+            <tr>
+              <td><strong>4º Pedido</strong></td>
+              <td>3%</td>
+              <td>R$ 15,00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="text-align:center; color:var(--text-muted); font-size:14px; margin-top:15px;">
+        * O vínculo se encerra automaticamente após o 4º pedido (ou 90 dias).
+      </p>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section class="container">
+    <div class="section-title">
+      <h2>Como funciona</h2>
+      <p>Em 3 passos simples</p>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <i class="fas fa-user-plus"></i>
+        <h3>1. Cadastre-se</h3>
+        <p>Crie sua conta grátis, receba seu código e link de indicação.</p>
+      </div>
+      <div class="benefit-card">
+        <i class="fas fa-share-alt"></i>
+        <h3>2. Compartilhe</h3>
+        <p>Envie o link para amigos, grupos ou redes sociais. O cliente compra normalmente.</p>
+      </div>
+      <div class="benefit-card">
+        <i class="fas fa-money-bill-wave"></i>
+        <h3>3. Receba</h3>
+        <p>Acompanhe no dashboard e receba as comissões via PIX após a entrega.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta">
+    <div class="container">
+      <h2>Pronto para faturar?</h2>
+      <p>Junte-se ao time de afiliados da Vani Aguiar e transforme cada indicação em comissão.</p>
+      <button class="btn btn-primary btn-large" onclick="abrirModalAuth('cadastro')">
+        Criar minha conta grátis <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Vani Aguiar Personal Chef · <a href="termos.html" style="color:#aaa;">Termos do Programa</a></p>
+    </div>
+  </footer>
+
+  <!-- MODAL AUTH -->
+  <div id="modal-auth" class="modal-overlay">
+    <div class="modal-content">
+      <button class="fechar-modal" onclick="fecharModalAuth()">&times;</button>
+      <h2 id="auth-titulo" style="margin-bottom:20px; text-align:center;">Entrar na Conta</h2>
+
+      <form id="form-auth" onsubmit="processarAuth(event)">
+        <div class="form-group" id="group-nome" style="display:none;">
+          <input type="text" id="auth-nome" placeholder="Seu Nome Completo">
+        </div>
+        <div class="form-group" id="group-telefone" style="display:none;">
+          <input type="tel" id="auth-telefone" placeholder="WhatsApp (DDD + Número)">
+        </div>
+        <div class="form-group" id="group-pix" style="display:none;">
+          <input type="text" id="auth-pix" placeholder="Chave PIX (e-mail, CPF ou telefone)">
+        </div>
+        <div class="form-group">
+          <input type="email" id="auth-email" placeholder="Seu E-mail" required>
+        </div>
+        <div class="form-group">
+          <input type="password" id="auth-senha" placeholder="Sua Senha (mín. 6 caracteres)" required minlength="6">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="btn-auth-submit">Entrar</button>
+      </form>
+
+      <div class="auth-toggle">
+        <span id="toggle-text">Ainda não tem conta?</span>
+        <button type="button" class="btn-link" onclick="const m=document.getElementById('modal-auth').dataset.modo; abrirModalAuth(m==='login'?'cadastro':'login')">
+          <span id="toggle-btn">Cadastre-se</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
