@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard do Afiliado | VC Marmitas</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="page-dashboard">
+
+  <!-- HEADER DASHBOARD -->
+  <header class="dashboard-header">
+    <div class="container">
+      <div class="user-info">
+        <div class="user-avatar" id="avatar-inicial">A</div>
+        <div>
+          <div style="font-size:13px; opacity:0.7;">Olá,</div>
+          <strong id="nome-usuario">Afiliado</strong>
+        </div>
+      </div>
+      <div style="display:flex; gap:15px; align-items:center;">
+        <a href="termos.html" style="color:#ccc; font-size:14px;">Regras</a>
+        <button class="btn-link" style="color:#fff;" onclick="deslogar()">Sair <i class="fas fa-sign-out-alt"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding: 30px 0 60px;">
+
+    <!-- STATS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="label">Comissões totais</div>
+        <div class="value green" id="stat-comissao">R$ 0,00</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Bônus</div>
+        <div class="value" id="stat-bonus">R$ 0,00</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Clientes únicos</div>
+        <div class="value" id="stat-clientes">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Pedidos</div>
+        <div class="value" id="stat-pedidos">0</div>
+      </div>
+    </div>
+
+    <!-- LINK DE INDICAÇÃO -->
+    <div class="panel">
+      <h3><i class="fas fa-link" style="color:var(--primary-color);"></i> Seu link de indicação</h3>
+      <p style="font-size:14px; color:var(--text-muted); margin-bottom:12px;">
+        Código: <strong id="codigo-afiliado">----</strong> · Compartilhe este link. Quando o cliente comprar, a venda é vinculada a você.
+      </p>
+      <div class="link-box">
+        <input type="text" id="link-afiliado" readonly value="">
+        <button class="btn btn-primary" id="btn-copiar" onclick="copiarLink()">
+          <i class="fas fa-copy"></i> Copiar
+        </button>
+      </div>
+    </div>
+
+    <!-- EXTRATO -->
+    <div class="panel">
+      <h3><i class="fas fa-receipt" style="color:var(--primary-color);"></i> Extrato de comissões</h3>
+      <div style="overflow-x:auto;">
+        <table class="extrato-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Cliente</th>
+              <th>Pedido</th>
+              <th>Valor</th>
+              <th>%</th>
+              <th>Comissão</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="extrato-body">
+            <!-- preenchido via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- DICA -->
+    <div class="panel" style="background: #fff8f5; border-color: #ffd0b8;">
+      <h3><i class="fas fa-lightbulb" style="color:var(--primary-color);"></i> Dica de vendas</h3>
+      <p style="font-size:14px; color:var(--text-muted);">
+        O Kit 10 Marmitas (R$ 229,90) é o mais vendido. Foque nele nas suas indicações.  
+        Lembre-se: o vínculo com o cliente dura até o 4º pedido ou 90 dias.
+      </p>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Vani Aguiar Personal Chef · Portal de Afiliados</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
