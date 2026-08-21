@@ -12,7 +12,6 @@
 </head>
 <body class="page-dashboard">
 
-  <!-- HEADER DASHBOARD -->
   <header class="dashboard-header">
     <div class="container">
       <div class="user-info">
@@ -51,6 +50,17 @@
       </div>
     </div>
 
+    <div class="stats-grid" style="margin-top:0;">
+      <div class="stat-card">
+        <div class="label">Já recebido (pago)</div>
+        <div class="value green" id="stat-pago">R$ 0,00</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">A receber (pendente)</div>
+        <div class="value" style="color:#e65100;" id="stat-pendente">R$ 0,00</div>
+      </div>
+    </div>
+
     <!-- LINK DE INDICAÇÃO -->
     <div class="panel">
       <h3><i class="fas fa-link" style="color:var(--primary-color);"></i> Seu link de indicação</h3>
@@ -62,6 +72,25 @@
         <button class="btn btn-primary" id="btn-copiar" onclick="copiarLink()">
           <i class="fas fa-copy"></i> Copiar
         </button>
+      </div>
+      <div style="margin-top:15px; display:flex; gap:10px; flex-wrap:wrap;">
+        <a id="btn-whatsapp-share" href="#" target="_blank" class="btn btn-secondary" style="padding:10px 18px; font-size:14px;">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+        <button class="btn btn-secondary" style="padding:10px 20px; font-size:14px;" onclick="compartilharNativo()">
+          <i class="fas fa-share-alt"></i> Compartilhar
+        </button>
+      </div>
+    </div>
+
+    <!-- DADOS DO AFILIADO -->
+    <div class="panel">
+      <h3><i class="fas fa-user" style="color:var(--primary-color);"></i> Seus dados</h3>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; font-size:14px;">
+        <div><strong>E-mail:</strong><br><span id="info-email">—</span></div>
+        <div><strong>WhatsApp:</strong><br><span id="info-tel">—</span></div>
+        <div><strong>Chave PIX:</strong><br><span id="info-pix">—</span></div>
+        <div><strong>Membro desde:</strong><br><span id="info-desde">—</span></div>
       </div>
     </div>
 
@@ -77,7 +106,7 @@
               <th>Pedido</th>
               <th>Valor</th>
               <th>%</th>
-              <th>Comissão</th>
+              <th>Comissão + Bônus</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -88,13 +117,16 @@
       </div>
     </div>
 
-    <!-- DICA -->
+    <!-- DICA + SIMULAR (demo) -->
     <div class="panel" style="background: #fff8f5; border-color: #ffd0b8;">
       <h3><i class="fas fa-lightbulb" style="color:var(--primary-color);"></i> Dica de vendas</h3>
-      <p style="font-size:14px; color:var(--text-muted);">
-        O Kit 10 Marmitas (R$ 229,90) é o mais vendido. Foque nele nas suas indicações.  
+      <p style="font-size:14px; color:var(--text-muted); margin-bottom:15px;">
+        O Kit 10 Marmitas (R$ 229,90) é o mais vendido. Foque nele nas suas indicações.<br>
         Lembre-se: o vínculo com o cliente dura até o 4º pedido ou 90 dias.
       </p>
+      <button class="btn btn-secondary" style="padding:10px 20px; font-size:14px;" onclick="simularNovaVenda()">
+        <i class="fas fa-plus"></i> Simular nova venda (demo)
+      </button>
     </div>
 
   </main>
